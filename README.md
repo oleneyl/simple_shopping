@@ -29,3 +29,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
     
     Show client's wishlist and calculates budget.
 
+
+- Used Library 
+
+
+  - create-react-app : 빠른 React 개발환경 구축을 위해 활용
+  - react-router-dom : Routing 구현을 위해 활용
