@@ -44,7 +44,7 @@ class WishlistHolder extends Component {
       return acc + price;
     }, 0);
 
-    return totalPrice;
+    return Math.floor(totalPrice);
   }
   
   render(){
