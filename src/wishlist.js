@@ -28,7 +28,7 @@ class WishlistHolder extends Component {
     console.log(this.props.coupons, this.props.couponIndex);
     let totalPrice = this.props.products.reduce( (acc, curr) => {
       let price = curr.price * curr.checked * curr.amount;
-      if(price > 0 && this.props.couponIndex >= 0 && curr.availableCoupon !== false){
+      if(price > 0 && this.props.couponIndex >= 0 && curr.availableCoupon === false){
         console.log('may need coupon');
         let selectedCoupon = this.props.coupons[this.props.couponIndex];
         if(selectedCoupon.type === 'rate'){

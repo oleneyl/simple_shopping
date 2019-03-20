@@ -7,15 +7,12 @@ import {WishlistHolder} from './wishlist';
 class App extends Component {
   manageCart(id){
     if(this.state.cart.findIndex(d => d.id === id) !== -1){
-      console.log('detected');
       let idx = this.state.cart.findIndex(d => d.id === id);
       let newCart = this.state.cart.map(d => d);
       newCart.splice(idx,1);
       this.setState({cart : newCart});
     }else{
       if(this.state.cart.length < 3){
-        console.log('add');
-        console.log(productItems.find(d => d.id === id));
         this.setState({cart : this.state.cart.concat({
           ...productItems.find(d => d.id === id),
           amount:0,
@@ -37,7 +34,6 @@ class App extends Component {
       newCart[idx].amount=Math.max(0,value);
     }
     this.setState({cart:newCart});
-    console.log(this.state.cart);
   }
   
   state = {
