@@ -52,7 +52,7 @@ class WishlistHolder extends Component {
     
     return (
     <div>
-      <div style={{minHeight:400, border : '1px solid #CACACA', margin : '0 10px'}}>
+      <div style={{minHeight:400, border : '1px solid #CACACA', padding : '0 10px'}}>
         {products}
       </div>
       <div style={{border:'1px solid #CACACA', display:'flex',paddingTop:15,paddingBottom : 15}}>
