@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {productItems, coupons} from  './data';
 import {ProductHolder} from './product';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink,Redirect } from 'react-router-dom';
 import {WishlistHolder} from './wishlist';
 
 class App extends Component {
@@ -62,8 +62,11 @@ class App extends Component {
               <NavLink to={'/wishlist'}>장바구니</NavLink>
             </div>
           </div>
-          <Route exact path = "/products" render = {(props) => {
-              return (<ProductHolder products={this.state.products}
+          <Route exact path = "/products" render = { (props)=>{
+            return (<Redirect to="/products/1"/>);
+          }}/>
+          <Route path = "/products/:page" render = {(props) => {
+              return (<ProductHolder {...props} products={this.state.products}
                                     cart={this.state.cart}
                                     manageCart={(v)=>this.manageCart(v)} />);
             }}/>

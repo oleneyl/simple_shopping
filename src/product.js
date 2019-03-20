@@ -1,12 +1,29 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class ProductHolder extends Component {
   render(){
+    let startPoint = Math.max(parseInt(this.props.match.params.page,10) || 1, 1) - 1;
+    let productPerPage = 5;
+    let viewPerPage = 5;
+    
+    let startPage = Math.floor(startPoint / viewPerPage) * viewPerPage;
+    let totalPage = Math.min(Math.floor((this.props.products.length-1) / productPerPage)+1, 
+                                startPage + viewPerPage);
+    
+    let indexer = [...Array(totalPage-startPage).keys()].map( (d,i) => {
+      return (
+      <div style={{width:20,height:20,border:'1px solid #CACACA', margin:'0 3px'}} key={i + startPage + 1}>
+        <Link to={'/products/'+(i + startPage + 1)} style={{textDecoration:'none'}}>{i+startPage+1}</Link>
+      </div>);
+    });
+    
     return (<div>
       {this.props.products.sort((a,b) => {
         return (b.score - a.score);
       }).filter((d,i)=>{
-        return i < 5;
+      console.log(i, startPoint, (i < (productPerPage * (startPoint+1))) && (i >= (startPoint * productPerPage)));
+        return (i < (productPerPage * (startPoint+1))) && (i >= (startPoint * productPerPage));
       }).map( pd => {
         return (<div style={{
           margin:'15px 0',
@@ -16,6 +33,11 @@ class ProductHolder extends Component {
           <ProductIndiv {...pd} cart={this.props.cart.findIndex(d => d.id === pd.id) !== -1} manageCart={(v)=>this.props.manageCart(v)}/>
         </div>);
       })}
+      <div style={{marginBottom : 250}}>
+        <div style={{textAlign:'center',width:200,display:'flex'}}>
+          {indexer}
+        </div>
+      </div>
     </div>);
   }
 }
@@ -40,7 +62,7 @@ class ProductIndiv extends Component {
         <div style={{marginBottom:10}}>{this.props.price + '원'}</div>
         {this.props.cart !== null ?
           <div style={{cursor:'pointer', border:'1px solid #CACACA'}} onClick={()=>this.whenItemClicked()}>
-            {this.props.cart ? '빼기' : '넣기'}
+            {this.props.cart ? '빼기' : '담기'}
           </div> : null}
       </div>      
       <div style={{width:300,height:150,textAlign:'right'}}>
