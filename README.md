@@ -35,3 +35,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
   - create-react-app : 빠른 React 개발환경 구축을 위해 활용
   - react-router-dom : Routing 구현을 위해 활용
+  - react-cookie : 쿠키 사용을 위해 활용
