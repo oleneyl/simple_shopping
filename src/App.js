@@ -3,26 +3,41 @@ import {productItems, coupons} from  './data';
 import {ProductHolder} from './product';
 import { Route, NavLink,Redirect } from 'react-router-dom';
 import {WishlistHolder} from './wishlist';
+import { withCookies } from 'react-cookie';
 
 class App extends Component {
+  
+  componentDidMount(){
+    const { cookies } = this.props;
+    this.setState({
+      cart: cookies.get('wishlist') || []
+    });
+  }
+  
   manageCart(id){
+    const { cookies } = this.props;
+    let newCart = null;
     if(this.state.cart.findIndex(d => (d.id+'_'+d.price) === id) !== -1){
       let idx = this.state.cart.findIndex(d => (d.id+'_'+d.price) === id);
-      let newCart = this.state.cart.map(d => d);
+      newCart = this.state.cart.map(d => d);
       newCart.splice(idx,1);
       this.setState({cart : newCart});
     }else{
       if(this.state.cart.length < 3){
-        this.setState({cart : this.state.cart.concat({
+        newCart = this.state.cart.concat({
           ...productItems.find(d => (d.id+'_'+d.price) === id),
           amount:0,
           checked:false,
           uid:this.state.cartCount
-        }), cartCount : this.state.cartCount+1});
+        });
+        this.setState({cart : newCart, cartCount : this.state.cartCount+1});
       }else{
         window.alert('상품은 최대 3개까지만 담을 수 있습니다');
       }
     }
+    if(newCart){
+      cookies.set('wishlist', newCart);
+    };
   }
   
   manageWishlist(uid, value, runningType){
@@ -87,4 +102,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withCookies(App);
