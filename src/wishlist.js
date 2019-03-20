@@ -10,8 +10,14 @@ class WishlistProduct extends Component {
           <ProductIndiv manageCart={(v)=>{}} {...this.props} cart={null}/>
         </div>
         <div style={{width:50, paddingTop : 45, margin : '0 10px'}}>
-          <input style={{width:35}} type='number' onChange={(e) => this.props.whenProductVaryed(this.props.uid, e.target.value)} defaultValue={this.props.amount}/>
-          <input type='checkbox' onChange={(e) => this.props.whenProductSelected(this.props.uid, e.target.checked)}/>
+          <input style={{width:35}} 
+            type='number' 
+            onChange={(e) => this.props.whenProductVaryed(this.props.uid, e.target.value)} 
+            defaultValue={this.props.amount}/>
+          <input 
+            type='checkbox' 
+            onChange={(e) => this.props.whenProductSelected(this.props.uid, e.target.checked)}
+            checked={this.props.checked}/>
         </div>
       </div>
     );
@@ -25,11 +31,9 @@ class WishlistHolder extends Component {
   products : currentyl selected products.
   */
   calculateTotalPrice(){
-    console.log(this.props.coupons, this.props.couponIndex);
     let totalPrice = this.props.products.reduce( (acc, curr) => {
       let price = curr.price * curr.checked * curr.amount;
-      if(price > 0 && this.props.couponIndex >= 0 && curr.availableCoupon === false){
-        console.log('may need coupon');
+      if(price > 0 && this.props.couponIndex >= 0 && curr.availableCoupon !== false){
         let selectedCoupon = this.props.coupons[this.props.couponIndex];
         if(selectedCoupon.type === 'rate'){
           price = price * (1 - 0.01 * selectedCoupon.discountRate);
@@ -37,7 +41,7 @@ class WishlistHolder extends Component {
           price -= selectedCoupon.discountAmount;
         }
       }      
-      return price;
+      return acc + price;
     }, 0);
 
     return totalPrice;
@@ -61,8 +65,8 @@ class WishlistHolder extends Component {
             사용할 쿠폰을 선택하세요.
           </div>
           <select onChange={(e) => {this.props.manageCoupon(e.target.selectedIndex-1)}}>
-            <option value={'사용하지 않음'}>{'사용하지 않음'}</option>
-            {this.props.coupons.map(cp => <option value={cp.title}>{cp.title}</option>)}
+            <option key={'사용하지 않음'} value={'사용하지 않음'} selected={this.props.couponIndex<0}>{'사용하지 않음'}</option>
+            {this.props.coupons.map((cp,idx) => <option key={cp.title} value={cp.title} selected={this.props.couponIndex === idx ? true : null}>{cp.title}</option>)}
           </select>
         </div>
         <div style={{flex:1, textAlign:'right', marginRight:15}}>
