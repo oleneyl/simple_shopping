@@ -22,7 +22,6 @@ class ProductHolder extends Component {
       {this.props.products.sort((a,b) => {
         return (b.score - a.score);
       }).filter((d,i)=>{
-      console.log(i, startPoint, (i < (productPerPage * (startPoint+1))) && (i >= (startPoint * productPerPage)));
         return (i < (productPerPage * (startPoint+1))) && (i >= (startPoint * productPerPage));
       }).map( pd => {
         return (<div style={{
@@ -30,7 +29,7 @@ class ProductHolder extends Component {
           border : '1px solid #CACACA',
           
         }} key={[pd.id,pd.price].join('_')}>
-          <ProductIndiv {...pd} cart={this.props.cart.findIndex(d => d.id === pd.id) !== -1} manageCart={(v)=>this.props.manageCart(v)}/>
+          <ProductIndiv {...pd} cart={this.props.cart.findIndex(d => (d.id === pd.id && d.price === pd.price)) !== -1} manageCart={(v)=>this.props.manageCart(v)}/>
         </div>);
       })}
       <div style={{marginBottom : 250}}>
@@ -44,7 +43,7 @@ class ProductHolder extends Component {
 
 class ProductIndiv extends Component {
   whenItemClicked(){
-    this.props.manageCart(this.props.id);
+    this.props.manageCart(this.props.id+'_'+this.props.price);
   }
   
   render(){

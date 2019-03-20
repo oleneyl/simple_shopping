@@ -6,15 +6,15 @@ import {WishlistHolder} from './wishlist';
 
 class App extends Component {
   manageCart(id){
-    if(this.state.cart.findIndex(d => d.id === id) !== -1){
-      let idx = this.state.cart.findIndex(d => d.id === id);
+    if(this.state.cart.findIndex(d => (d.id+'_'+d.price) === id) !== -1){
+      let idx = this.state.cart.findIndex(d => (d.id+'_'+d.price) === id);
       let newCart = this.state.cart.map(d => d);
       newCart.splice(idx,1);
       this.setState({cart : newCart});
     }else{
       if(this.state.cart.length < 3){
         this.setState({cart : this.state.cart.concat({
-          ...productItems.find(d => d.id === id),
+          ...productItems.find(d => (d.id+'_'+d.price) === id),
           amount:0,
           checked:false,
           uid:this.state.cartCount
