@@ -56,10 +56,10 @@ class App extends Component {
           <div style={{display:'flex', padding:'30px 50px', border : '1px solid #CACACA'}}>
             <div style={{flex:1}}>데모 페이지</div>
             <div style={{width:120}}>
-              <NavLink to={'/products'}>Products</NavLink>
+              <NavLink to={'/products'} style={{textDecoration:'none'}}>Products</NavLink>
             </div>
             <div style={{width:120}}>
-              <NavLink to={'/wishlist'}>장바구니</NavLink>
+              <NavLink to={'/wishlist'} style={{textDecoration:'none'}}>장바구니</NavLink>
             </div>
           </div>
           <Route exact path = "/products" render = { (props)=>{
