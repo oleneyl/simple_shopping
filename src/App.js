@@ -57,7 +57,7 @@ class App extends Component {
       <div style={{display:'flex'}}>
         <div style={{flex:1}}/>
         <div style={{flex:5}}>
-          <div style={{display:'flex'}}>
+          <div style={{display:'flex', padding:'30px 50px', border : '1px solid #CACACA'}}>
             <div style={{flex:1}}>데모 페이지</div>
             <div style={{width:120}}>
               <NavLink to={'/products'}>Products</NavLink>
